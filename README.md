@@ -1,3 +1,7 @@
+A fork of Web Scraper Chrome Extension by https://github.com/martinsbalodis
+
+I have added a new selector which can inject and run custom javascript on scraped site.
+
 # Web Scraper
 Web Scraper is a chrome browser extension built for data extraction from web 
 pages. Using this extension you can create a plan (sitemap) how a web site 
