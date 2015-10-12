@@ -743,6 +743,10 @@ SitemapController.prototype = {
 					title: 'Popup Link'
 				},
 				{
+					type: 'SelectorScript',
+					title: 'Script'
+				},
+				{
 					type: 'SelectorImage',
 					title: 'Image'
 				},
@@ -853,6 +857,7 @@ SitemapController.prototype = {
 		var selectorsSelector = $("#edit-selector [name=selector]").val();
 		var tableDataRowSelector = $("#edit-selector [name=tableDataRowSelector]").val();
 		var tableHeaderRowSelector = $("#edit-selector [name=tableHeaderRowSelector]").val();
+		var scriptSelector = $("#edit-selector [name=scriptSelector]").val();
 		var clickElementSelector = $("#edit-selector [name=clickElementSelector]").val();
 		var type = $("#edit-selector [name=type]").val();
 		var clickElementUniquenessType = $("#edit-selector [name=clickElementUniquenessType]").val();
@@ -887,6 +892,7 @@ SitemapController.prototype = {
 			tableHeaderRowSelector: tableHeaderRowSelector,
 			tableDataRowSelector: tableDataRowSelector,
 			clickElementSelector: clickElementSelector,
+			scriptSelector: scriptSelector,
 			clickElementUniquenessType: clickElementUniquenessType,
 			clickType: clickType,
 			discardInitialElements: discardInitialElements,
@@ -1042,7 +1048,7 @@ SitemapController.prototype = {
 			$("#viewport").html(dataPanel);
 
 			// display data
-			// Doing this the long way so there aren't xss vulnerubilites 
+			// Doing this the long way so there aren't xss vulnerubilites
 			// while working with data or with the selector titles
 			var $tbody = $("#sitemap-data tbody");
 			data.forEach(function (row) {
@@ -1407,7 +1413,7 @@ SitemapController.prototype = {
 			// remove from validator
 			var validator = this.getFormValidator();
 			validator.removeField($block.find("input"));
-			
+
 			$block.remove();
 		}
 	}
