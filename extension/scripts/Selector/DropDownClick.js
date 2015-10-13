@@ -118,6 +118,7 @@ var DropDownClick = {
 
 		// initial click and wait
 		var currentClickElement = clickElements[0];
+		this.triggerButtonClick(currentClickElement);
 		var nextElementSelection = (new Date()).getTime()+delay;
 
 		// infinitely scroll down and find all items

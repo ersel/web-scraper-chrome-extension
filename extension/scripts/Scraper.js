@@ -177,6 +177,9 @@ Scraper.prototype = {
 						delete record['_follow'];
 						delete record['_followSelectorId'];
 					}
+					var dt = new Date();
+					while ((new Date()) - dt <= 5) { /* Do nothing */ }
+					record['timestamp'] = new Date().getTime();
 					scrapedRecords.push(record);
 				}
 

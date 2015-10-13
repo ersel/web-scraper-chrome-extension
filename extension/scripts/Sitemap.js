@@ -174,7 +174,24 @@ Sitemap.prototype = {
 
 		return columns;
 	},
-	getDataExportCsvBlob: function (data) {
+	getDataExportCsvBlob: function(data){
+		var clone = data.slice(0);
+		data.sort(function (a, b) {
+		  if (a.timestamp > b.timestamp) {
+		    return 1;
+		  }
+		  if (a.timestamp < b.timestamp) {
+		    return -1;
+		  }
+		  // a must be equal to b
+		  return 0;
+		});
+		var dt = new Date();
+		while ((new Date()) - dt <= 1000) { /* Do nothing */ }
+		//alert(JSON.stringify(data) === JSON.stringify(clone))
+		return this.getDataExportCsvBlobContinue(data);
+	},
+	getDataExportCsvBlobContinue: function (data) {
 
 		var columns = this.getDataColumns(),
 			delimiter = ',',
@@ -216,4 +233,3 @@ Sitemap.prototype = {
 		return sitemap;
 	}
 };
-
