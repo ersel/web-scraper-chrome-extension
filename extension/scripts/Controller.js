@@ -189,6 +189,9 @@ SitemapController.prototype = {
 				"#edit-selector button[action=preview-click-element-selector]": {
 					click: this.previewClickElementSelector
 				},
+				"#edit-selector button[action=preview-drop-down-click]": {
+					click: this.previewDropDownClick
+				},
 				"#edit-selector button[action=preview-table-row-selector]": {
 					click: this.previewTableRowSelector
 				},
@@ -672,6 +675,13 @@ SitemapController.prototype = {
 						}
 					}
 				},
+				dropDownSelector: {
+					validators: {
+						notEmpty: {
+							message: 'Drop-down selector is required and cannot be empty'
+						}
+					}
+				},
 				tableHeaderRowSelector: {
 					validators: {
 						notEmpty: {
@@ -775,6 +785,10 @@ SitemapController.prototype = {
 					title: 'Element click'
 				},
 				{
+					type: 'DropDownClick',
+					title: 'Dropdown click'
+				},
+				{
 					type: 'SelectorGroup',
 					title: 'Grouped'
 				}
@@ -859,6 +873,7 @@ SitemapController.prototype = {
 		var tableHeaderRowSelector = $("#edit-selector [name=tableHeaderRowSelector]").val();
 		var scriptSelector = $("#edit-selector [name=scriptSelector]").val();
 		var clickElementSelector = $("#edit-selector [name=clickElementSelector]").val();
+		var dropDownSelector = $("#edit-selector [name=dropDownSelector]").val();
 		var type = $("#edit-selector [name=type]").val();
 		var clickElementUniquenessType = $("#edit-selector [name=clickElementUniquenessType]").val();
 		var clickType = $("#edit-selector [name=clickType]").val();
@@ -892,6 +907,7 @@ SitemapController.prototype = {
 			tableHeaderRowSelector: tableHeaderRowSelector,
 			tableDataRowSelector: tableDataRowSelector,
 			clickElementSelector: clickElementSelector,
+			dropDownSelector: dropDownSelector,
 			scriptSelector: scriptSelector,
 			clickElementUniquenessType: clickElementUniquenessType,
 			clickType: clickType,
@@ -1256,6 +1272,29 @@ SitemapController.prototype = {
 			var deferredSelectorPreview = this.contentScript.previewSelector({
 				parentCSSSelector: parentCSSSelector,
 				elementCSSSelector: selector.clickElementSelector
+			});
+
+			deferredSelectorPreview.done(function() {
+				$(button).addClass("preview");
+			});
+		}
+		else {
+			this.contentScript.removeCurrentContentSelector();
+			$(button).removeClass("preview");
+		}
+	},
+	previewDropDownClick: function(button) {
+
+		if (!$(button).hasClass('preview')) {
+
+			var sitemap = this.state.currentSitemap;
+			var selector = this.getCurrentlyEditedSelector();
+			var currentStateParentSelectorIds = this.getCurrentStateParentSelectorIds();
+			var parentCSSSelector = sitemap.selectors.getParentCSSSelectorWithinOnePage(currentStateParentSelectorIds);
+
+			var deferredSelectorPreview = this.contentScript.previewSelector({
+				parentCSSSelector: parentCSSSelector,
+				elementCSSSelector: selector.dropDownSelector
 			});
 
 			deferredSelectorPreview.done(function() {

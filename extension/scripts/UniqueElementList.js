@@ -15,9 +15,14 @@ UniqueElementList.prototype.push = function(element) {
 		return false;
 	}
 	else {
+		if(this.clickElementUniquenessType === 'uniqueString') {
+			el = element;
+		} else {
+			el = $(element).clone(true)[0];
+		}
 		var elementUniqueId = this.getElementUniqueId(element);
 		this.addedElements[elementUniqueId] = true;
-		Array.prototype.push.call(this, $(element).clone(true)[0]);
+		Array.prototype.push.call(this, el);
 		return true;
 	}
 };
@@ -27,6 +32,9 @@ UniqueElementList.prototype.getElementUniqueId = function(element) {
 	if(this.clickElementUniquenessType === 'uniqueText') {
 		var elementText = $(element).text().trim();
 		return elementText;
+	}
+	else if(this.clickElementUniquenessType === 'uniqueString') {
+		return element;
 	}
 	else if(this.clickElementUniquenessType === 'uniqueHTMLText') {
 
