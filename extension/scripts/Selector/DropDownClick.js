@@ -64,8 +64,8 @@ var DropDownClick = {
 
 	triggerButtonClick: function(clickElement) {
 
-		var value = clickElement.slice(-2).slice(0,1);
-
+		var value = clickElement.match(/\((.*?)\)/)[1];
+		
 		// this function will trigger the click from browser land
 		var script   = document.createElement("script");
 		script.type  = "text/javascript";
